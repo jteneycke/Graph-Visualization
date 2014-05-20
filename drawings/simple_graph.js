@@ -80,7 +80,8 @@ Drawing.SimpleGraph = function(options) {
     renderer.setSize( window.innerWidth, window.innerHeight );
 
     camera = new THREE.PerspectiveCamera(40, window.innerWidth/window.innerHeight, 1, 1000000);
-    camera.position.z = 5000;
+    //camera back to see the whole graph everytime
+    camera.position.z = 15000;
 
     controls = new THREE.TrackballControls(camera);
 
@@ -102,7 +103,8 @@ Drawing.SimpleGraph = function(options) {
 
     // Node geometry
     if(that.layout === "3d") {
-      geometry = new THREE.CubeGeometry( 25, 25, 25 );
+      //geometry = new THREE.CubeGeometry( 25, 25, 25 );
+      geometry = new THREE.SphereGeometry( 50, 25, 25 ); //nicer
     } else {
       geometry = new THREE.CubeGeometry( 50, 50, 0 );
     }
@@ -182,7 +184,9 @@ Drawing.SimpleGraph = function(options) {
 
     that.layout_options.width = that.layout_options.width || 2000;
     that.layout_options.height = that.layout_options.height || 2000;
-    that.layout_options.iterations = that.layout_options.iterations || 100000;
+    //Set the iterations of the drawing algorithm
+    that.layout_options.iterations = that.layout_options.iterations || 10000;
+    //that.layout_options.iterations = that.layout_options.iterations || 100000;
     that.layout_options.layout = that.layout_options.layout || that.layout;
     graph.layout = new Layout.ForceDirected(graph, that.layout_options);
     graph.layout.init();
@@ -195,7 +199,12 @@ Drawing.SimpleGraph = function(options) {
    *  Create a node object and add it to the scene.
    */
   function drawNode(node) {
-    var draw_object = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( {  color: Math.random() * 0xffffff, opacity: 0.5 } ) );
+    //Modify size of node 32
+    if (node.id == 32){
+      geometry = new THREE.SphereGeometry( 150, 25, 25 );
+    }
+    //Modify opacity, put 1 so that nodes are seen clear
+    var draw_object = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( {  color: Math.random() * 0xffffff, opacity: 1 } ) );
 
     if(that.show_labels) {
       if(node.data.title != undefined) {
@@ -219,6 +228,9 @@ Drawing.SimpleGraph = function(options) {
     node.data.draw_object = draw_object;
     node.position = draw_object.position;
     scene.add( node.data.draw_object );
+    if (node.id == 32){
+      geometry = new THREE.SphereGeometry( 50, 25, 25 );
+    }
   }
 
 
@@ -268,14 +280,15 @@ Drawing.SimpleGraph = function(options) {
 
 
     // Show labels if set
-    // It creates the labels when this options is set during visualization
+    // It creates the labels when this option is set during visualization
     if(that.show_labels) {
       var length = graph.nodes.length;
       for(var i=0; i<length; i++) {
         var node = graph.nodes[i];
         if(node.data.label_object != undefined) {
           node.data.label_object.position.x = node.data.draw_object.position.x;
-          node.data.label_object.position.y = node.data.draw_object.position.y - 100;
+          //node.data.label_object.position.y = node.data.draw_object.position.y - 100;
+          node.data.label_object.position.y = node.data.draw_object.position.y;
           node.data.label_object.position.z = node.data.draw_object.position.z;
           node.data.label_object.lookAt(camera.position);
         } else {
