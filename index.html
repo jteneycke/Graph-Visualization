@@ -22,8 +22,10 @@
     <script type="text/javascript" src="utils/Label.js"></script>
     <script type="text/javascript" src="utils/ObjectSelection.js"></script>
     <script type="text/javascript" src="layouts/force-directed-layout.js"></script>
+    <script type="text/javascript" src="layouts/hyperbolic-layout.js"></script>
     <script type="text/javascript" src="drawings/simple_graph.js"></script>
     <script type="text/javascript" src="drawings/sphere_graph.js"></script>
+    <script type="text/javascript" src="drawings/hyper_graph.js"></script>
 
     <script type="text/javascript">
       var drawing;
@@ -35,12 +37,15 @@
         /* Change these values to draw more nodes (numNodes) */
         switch(index) {
           case 0:
-            drawing = new Drawing.SimpleGraph({layout: '2d', selection: true, numNodes: 50, showStats: true, showInfo: true});
+            drawing = new Drawing.HyperGraph({layout: '2d', selection: true, numNodes: 50, showStats: true, showInfo: true});
             break;
           case 1:
-            drawing = new Drawing.SimpleGraph({layout: '3d', selection: true, numNodes: 50, graphLayout:{attraction: 5, repulsion: 0.5}, showStats: true, showInfo: true});
+            drawing = new Drawing.SimpleGraph({layout: '2d', selection: true, numNodes: 50, showStats: true, showInfo: true});
             break;
           case 2:
+            drawing = new Drawing.SimpleGraph({layout: '3d', selection: true, numNodes: 50, graphLayout:{attraction: 5, repulsion: 0.5}, showStats: true, showInfo: true});
+            break;
+          case 3:
             drawing = new Drawing.SphereGraph({numNodes: 50, showStats: true, showInfo: true});
             break;
           default:
@@ -81,6 +86,7 @@
         <p>
           <label>Drawing</label><br>
           <select id="drawing_select" onchange="window.location.href = '?' + this.selectedIndex;">
+            <option>Hyperbolic Graph</option>
             <option>2D-Force-Directed</option>
             <option selected="selected">3D-Force-Directed</option>
             <option>Sphere Graph</option>

@@ -1,16 +1,14 @@
 /**
-  @author David Piegza
+  @author Daniel Abad
 
-  Implements a force-directed layout, the algorithm is based on Fruchterman and Reingold and
-  the JUNG implementation.
-
-  Needs the graph data structure Graph.js:
+  Implements a hyperbolic layout, the algorithm is based on JONH LAMPING AND RAMANA RAO
+  The class is based on David Piegza's force-directed layout
   https://github.com/davidpiegza/Graph-Visualization/blob/master/Graph.js
 
   Parameters:
   graph - data structure
   options = {
-    layout: "2d" or "3d"
+    layout: "2d"
     attraction: <float>, attraction value for force-directed layout
     repulsion: <float>, repulsion value for force-directed layout
     iterations: <int>, maximum number of iterations
@@ -23,25 +21,21 @@
   Examples:
   
   create:
-  layout = new Layout.ForceDirected(graph, {width: 2000, height: 2000, iterations: 1000, layout: "3d"});
+  layout = new Layout.Hyperbolic(graph, {width: 2000, height: 2000, iterations: 1000, layout: "3d"});
   
   call init when graph is loaded (and for reset or when new nodes has been added to the graph):
   layout.init();
   
   call generate in a render method, returns true if it's still calculating and false if it's finished
   layout.generate();
-
-
-  Feel free to contribute a new layout!
-
  */
 
 var Layout = Layout || {};
 
-Layout.ForceDirected = function(graph, options) {
+Layout.Hyperbolic = function(graph, options) {
   var options = options || {};
   
-  this.layout = options.layout || "2d";
+  this.layout = options.layout || "3d";
   this.attraction_multiplier = 5;
   this.repulsion_multiplier = 0.75;
   this.max_iterations = options.iterations || 1000;
