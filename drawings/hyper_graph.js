@@ -76,6 +76,7 @@ Drawing.HyperGraph = function(options) {
   animate();
 
   function init() {
+
     // Three.js initialization
     renderer = new THREE.WebGLRenderer({alpha: true});
     renderer.setSize( window.innerWidth, window.innerHeight );
@@ -119,6 +120,16 @@ Drawing.HyperGraph = function(options) {
           }
         },
         clicked: function(obj) {
+          console.log(obj);
+          if(obj != null) {
+            obj.position.x = 0;
+            obj.position.y = 0;
+            var x = document.getElementById("click_labels");
+            if (x.checked){
+              x.checked = false;
+            } else {x.checked = true;}
+            //recalculate layout
+          }
         }
       });
     }

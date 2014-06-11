@@ -13,7 +13,7 @@
     repulsion: <float>, repulsion value for force-directed layout
     iterations: <int>, maximum number of iterations
     width: <int>, width of the viewport
-    height: <int>, height of the viewport
+    height: <int>, height of the viewport 
 
     positionUpdated: <function>, called when the position of the node has been updated
   }
@@ -35,7 +35,6 @@ var Layout = Layout || {};
 Layout.Hyperbolic = function(graph, options) {
   var options = options || {};
   
-  this.layout = options.layout || "3d";
   this.attraction_multiplier = 5;
   this.repulsion_multiplier = 0.75;
   this.max_iterations = options.iterations || 1000;
@@ -68,6 +67,24 @@ Layout.Hyperbolic = function(graph, options) {
   
   // performance test
   var mean_time = 0;
+
+  var math = mathjs();
+  var a = math.complex({re:5,im:6});
+  var b = math.complex({re:3,im:4});
+  console.log(math.divide(a,b));
+
+  function transformation(z,p,theta){
+    //z,p,theta are complex numbers
+    var num = math.add(math.multiply(theta,z),p);
+    var den = math.add(1,math.multiply(math.multiply(math.conj(p),theta),z))
+    var zz = math.divide(num,den);
+    return zz;
+  };
+
+  function composition(z,p1,t1,p2,t2){
+    var p0,t0;
+    return transformation(z,p0,t0);
+  };
 
   /**
    * Initialize parameters used by the algorithm.
