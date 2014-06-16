@@ -71,8 +71,12 @@ Layout.Hyperbolic = function(graph, options) {
   var math = mathjs();
   var a = math.complex({re:5,im:6});
   var b = math.complex({re:3,im:4});
-  console.log(math.divide(a,b));
+  var c = math.complex({re:2,im:3});
+  console.log("traza 1: "+transformation(a,b,c));
 
+   /**
+   * Transformation of a point
+   */
   function transformation(z,p,theta){
     //z,p,theta are complex numbers
     var num = math.add(math.multiply(theta,z),p);
@@ -81,10 +85,29 @@ Layout.Hyperbolic = function(graph, options) {
     return zz;
   };
 
+   /**
+   * Inversion of a transformation of a point
+   */
+  function inversetransformation(z,p,theta){
+    var p0,t0;
+    return transformation(z,p0,t0);
+  };
+
+   /**
+   * Composition of two transformations
+   */
   function composition(z,p1,t1,p2,t2){
     var p0,t0;
     return transformation(z,p0,t0);
   };
+
+  function distance(s,a){
+    return 0;
+  }
+
+  function subangle(angle,children){
+    return angle / children;
+  }
 
   /**
    * Initialize parameters used by the algorithm.

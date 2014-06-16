@@ -80,6 +80,7 @@ Drawing.HyperGraph = function(options) {
     // Three.js initialization
     renderer = new THREE.WebGLRenderer({alpha: true});
     renderer.setSize( window.innerWidth, window.innerHeight );
+    console.log("Width: "+window.innerWidth+ " - Height: "+window.innerHeight);
 
     camera = new THREE.PerspectiveCamera(40, window.innerWidth/window.innerHeight, 1, 1000000);
     //camera back to see the whole graph everytime
@@ -114,7 +115,7 @@ Drawing.HyperGraph = function(options) {
         selected: function(obj) {
           // display info
           if(obj != null) {
-            info_text.select = "Object " + obj.id;
+            info_text.select = "Object " + obj.id +"x:"+obj.position.x+" -y:"+obj.position.y;
           } else {
             delete info_text.select;
           }
