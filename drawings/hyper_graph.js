@@ -226,8 +226,8 @@ Drawing.HyperGraph = function(options) {
     }
 
     var area = 5000;
-    draw_object.position.x = Math.floor(Math.random() * (area + area + 1) - area);
-    draw_object.position.y = Math.floor(Math.random() * (area + area + 1) - area);
+    //draw_object.position.x = Math.floor(Math.random() * (area + area + 1) - area);
+    //draw_object.position.y = Math.floor(Math.random() * (area + area + 1) - area);
 
     if(that.layout === "3d") {
       draw_object.position.z = Math.floor(Math.random() * (area + area + 1) - area);
@@ -240,6 +240,15 @@ Drawing.HyperGraph = function(options) {
     if (node.id == 32){
       geometry = new THREE.SphereGeometry( 50, 25, 25 );
     }
+    var radius = 5000,
+    segments = 64,
+    materialC = new THREE.LineBasicMaterial( { color: 0x0000ff } ),
+    geometryC = new THREE.CircleGeometry( radius, segments );
+
+    // Remove center vertex
+    geometryC.vertices.shift();
+
+    scene.add( new THREE.Line( geometryC, materialC ) );
   }
 
 
